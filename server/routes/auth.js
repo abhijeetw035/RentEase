@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const User = require("../models/User");
 
-const { registerHandler } = require("../controllers/auth");
+const { registerHandler, loginHandler } = require("../controllers/auth");
 
 const router = express.Router();
 
@@ -21,5 +21,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post("/register", upload.single("profileImage"), registerHandler);
+router.post("/login", loginHandler);
 
 module.exports = router;
