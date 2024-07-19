@@ -7,7 +7,7 @@ import "../styles/Navbar.scss";
 import { Link } from "react-router-dom";
 import { setLogout } from "../redux/state";
 
-const Navabar = () => {
+const Navbar = () => {
   const [dropDownMenu, setDropDownMenu] = useState(false);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -82,4 +82,4 @@ const Navabar = () => {
   );
 };
 
-export default Navabar;
+export default Navbar;

@@ -1,5 +1,5 @@
 import React from 'react'
-import Navabar from '../components/Navabar';
+import Navbar from '../components/Navbar';
 import Slide from '../components/Slide';
 import Categories from '../components/Categories';
 
@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <div>
       {" "}
-      <Navabar />
+      <Navbar />
       <Slide />
       <Categories />
     </div>
