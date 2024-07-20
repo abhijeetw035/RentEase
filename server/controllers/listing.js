@@ -66,4 +66,26 @@ const handleCreateListing = async (req, res) => {
   }
 };
 
-module.exports = { handleCreateListing };
+const handleGetListings = async (req, res) => {
+  const qCategory = req.query.category;
+
+  try {
+    let listings;
+    if (qCategory) {
+      listings = await Listing.find({ category: qCategory }).populate(
+        "creator"
+      );
+    } else {
+      listings = await Listing.find();
+    }
+
+    res.status(200).json(listings);
+  } catch (err) {
+    res
+      .status(404)
+      .json({ message: "Fail to fetch listings", error: err.message });
+    console.log(err);
+  }
+};
+
+module.exports = { handleCreateListing, handleGetListings };

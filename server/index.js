@@ -9,8 +9,10 @@ app.use(express.json());
 app.use(express.static("public"));
 
 const authRoutes = require("./routes/auth");
+const listingRoutes = require("./routes/listing");
 // routes
 app.use("/auth", authRoutes);
+app.use("/properties", listingRoutes);
 
 // mongoose setup
 const PORT = 3001;

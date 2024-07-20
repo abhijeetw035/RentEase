@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const multer = require("multer");
 
-
-
-const { handleCreateListing } = require("../controllers/listing");
+const {
+  handleCreateListing,
+  handleGetListings,
+} = require("../controllers/listing");
 
 // multer configuration
 const storage = multer.diskStorage({
@@ -18,3 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post("/create", upload.array("listingPhotos"), handleCreateListing);
+router.get("/", handleGetListings);
+
+
+module.exports = router;
