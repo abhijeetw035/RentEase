@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/ListingCard.scss";
 import { ArrowForwardIos, ArrowBackIosNew } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const ListingCard = ({
   listingId,
@@ -17,6 +18,7 @@ const ListingCard = ({
   totalPrice,
   booking,
 }) => {
+  const navigate = useNavigate();
   // Slider for images
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -43,6 +45,9 @@ const ListingCard = ({
               <img
                 src={`http://localhost:3001/${photo?.replace("public", "")}`}
                 alt={`photo ${index + 1}`}
+                onClick={() => {
+                  navigate(`/properties/${listingId}`);
+                }}
               />
               <div onClick={(e) => goToPrevSlide(e)} className="prev-button">
                 <ArrowBackIosNew sx={{ fontSize: "15px" }} />
@@ -54,13 +59,20 @@ const ListingCard = ({
           ))}
         </div>
       </div>
-
-      <h3>
-        {city}, {province}, {country}
-      </h3>
-      <p>{category}</p>
-      <p>{type}</p>
-      <p><span>₹{price}</span> per night</p>
+      <div
+        onClick={() => {
+          navigate(`/properties/${listingId}`);
+        }}
+      >
+        <h3>
+          {city}, {province}, {country}
+        </h3>
+        <p>{category}</p>
+        <p>{type}</p>
+        <p>
+          <span>₹{price}</span> per night
+        </p>
+      </div>
     </div>
   );
 };

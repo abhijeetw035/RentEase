@@ -4,6 +4,7 @@ const multer = require("multer");
 const {
   handleCreateListing,
   handleGetListings,
+  handleGetListingDetails,
 } = require("../controllers/listing");
 
 // multer configuration
@@ -20,6 +21,8 @@ const upload = multer({ storage });
 
 router.post("/create", upload.array("listingPhotos"), handleCreateListing);
 router.get("/", handleGetListings);
+
+router.get("/:listingId", handleGetListingDetails)
 
 
 module.exports = router;

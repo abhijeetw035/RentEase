@@ -88,4 +88,18 @@ const handleGetListings = async (req, res) => {
   }
 };
 
-module.exports = { handleCreateListing, handleGetListings };
+const handleGetListingDetails = async (req, res) => {
+  try {
+    const { listingId } = req.params;
+    const listing = await Listing.findById(listingId).populate("creator");
+    res.status(200).json(listing);
+  } catch (error) {
+    res.status(404).json({ message: "Listing not found", error: error.message });
+  }
+};
+
+module.exports = {
+  handleCreateListing,
+  handleGetListings,
+  handleGetListingDetails,
+};
