@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/ListingDetails.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { facilities } from "../data";
 
 import "react-date-range/dist/styles.css";
@@ -27,7 +27,6 @@ const ListingDetails = () => {
 
       const data = await response.json();
       setListing(data);
-      console.log(listing);
       setLoading(false);
     } catch (err) {
       console.log("Fetch Listing Details Failed", err.message);
@@ -55,11 +54,42 @@ const ListingDetails = () => {
   const end = new Date(dateRange[0].endDate);
   const dayCount = Math.round(end - start) / (1000 * 60 * 60 * 24); // Calculate the difference in day unit
 
+  // submit bookings
+  const customerId = useSelector((state) => state?.user?._id);
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    try {
+      const bookingForm = {
+        customerId,
+        listingId,
+        hostId: listing.creator._id,
+        startDate: dateRange[0].startDate.toDateString(),
+        endDate: dateRange[0].endDate.toDateString(),
+        totalPrice: listing.price * dayCount,
+      };
+
+      const response = await fetch("http://localhost:3001/bookings/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingForm),
+      });
+
+      if (response.ok) {
+        navigate(`/${customerId}/trips`);
+      }
+    } catch (error) {
+      console.log("Submit Booking Failed.", error.message);
+    }
+  };
+
   return loading ? (
     <Loader />
   ) : (
     <>
-        <Navbar />
+      <Navbar />
 
       <div className="listing-details">
         <div className="title">
@@ -151,7 +181,7 @@ const ListingDetails = () => {
               <p>Start Date: {dateRange[0].startDate.toDateString()}</p>
               <p>End Date: {dateRange[0].endDate.toDateString()}</p>
 
-              <button className="button" type="submit">
+              <button className="button" type="submit" onClick={handleSubmit}>
                 BOOKING
               </button>
             </div>

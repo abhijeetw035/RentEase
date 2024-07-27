@@ -10,9 +10,14 @@ app.use(express.static("public"));
 
 const authRoutes = require("./routes/auth");
 const listingRoutes = require("./routes/listing");
+const bookingRoutes = require("./routes/booking.js");
+const userRoutes = require("./routes/user.js");
+
 // routes
 app.use("/auth", authRoutes);
 app.use("/properties", listingRoutes);
+app.use("/bookings", bookingRoutes);
+app.use("/users", userRoutes);
 
 // mongoose setup
 const PORT = 3001;
