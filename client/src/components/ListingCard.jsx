@@ -46,7 +46,8 @@ const ListingCard = ({
 
   const isLiked = wishList?.find((item) => item?._id === listingId);
 
-  const patchWishList = async () => {
+const patchWishList = async () => {
+  if (user?._id !== creator?._id) {
     const response = await fetch(
       `http://localhost:3001/users/${user?._id}/${listingId}`,
       {
@@ -58,7 +59,10 @@ const ListingCard = ({
     );
     const data = await response.json();
     dispatch(setWishList(data.wishList));
-  };
+  } else {
+    return;
+  }
+};
 
   return (
     <div className="listing-card">
@@ -109,7 +113,7 @@ const ListingCard = ({
               {startDate} - {endDate}
             </p>
             <p>
-              <span>${totalPrice}</span> total
+              <span>₹{totalPrice}</span> total
             </p>
           </>
         )}

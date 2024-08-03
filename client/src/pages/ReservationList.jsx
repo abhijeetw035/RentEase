@@ -3,35 +3,35 @@ import "../styles/List.scss";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { setTripList } from "../redux/state";
+import { setReservationList } from "../redux/state";
 import ListingCard from "../components/ListingCard";
 
-const TripList = () => {
+const ReservationList = () => {
   const [loading, setLoading] = useState(true);
   const userId = useSelector((state) => state.user._id);
-  const tripList = useSelector((state) => state.user.tripList);
+  const reservationList = useSelector((state) => state.user.reservationList);
 
   const dispatch = useDispatch();
 
-  const getTripList = async () => {
+  const getReservationList = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/users/${userId}/trips`,
+        `http://localhost:3001/users/${userId}/reservations`,
         {
           method: "GET",
         }
       );
 
       const data = await response.json();
-      dispatch(setTripList(data));
+      dispatch(setReservationList(data));
       setLoading(false);
     } catch (err) {
-      console.log("Fetch Trip List failed!", err.message);
+      console.log("Fetch Reservation List failed!", err.message);
     }
   };
 
   useEffect(() => {
-    getTripList();
+    getReservationList();
   }, []);
 
   return loading ? (
@@ -39,9 +39,9 @@ const TripList = () => {
   ) : (
     <>
       <Navbar />
-      <h1 className="title-list">Your Trip List</h1>
+      <h1 className="title-list">Your Reservation List</h1>
       <div className="list">
-        {tripList?.map(
+        {reservationList?.map(
           (
             {
               listingId,
@@ -51,10 +51,10 @@ const TripList = () => {
               totalPrice,
               booking = true,
             },
-            index
+            idx
           ) => (
             <ListingCard
-              key={index}
+              key={idx}
               listingId={listingId._id}
               creator={hostId?._id}
               listingPhotoPaths={listingId.listingPhotoPaths}
@@ -74,4 +74,4 @@ const TripList = () => {
   );
 };
 
-export default TripList;
+export default ReservationList;

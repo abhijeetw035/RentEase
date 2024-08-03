@@ -65,4 +65,24 @@ const handlePropertyList = async (req, res) => {
   }
 };
 
-module.exports = { handleGetTrips, handleAddToWishlist, handlePropertyList };
+const handleRserevationList = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const reservations = await Booking.find({ hostId: userId }).populate(
+      "customerId hostId listingId"
+    );
+    res.status(202).json(reservations);
+  } catch (error) {
+    console.log(err);
+    res
+      .status(404)
+      .json({ message: "Can not find reservations!", error: err.message });
+  }
+};
+
+module.exports = {
+  handleGetTrips,
+  handleAddToWishlist,
+  handlePropertyList,
+  handleRserevationList,
+};
