@@ -10,7 +10,7 @@ const handleGetTrips = async (req, res) => {
     );
     res.status(202).json(trips);
   } catch (error) {
-    console.log(err);
+    console.log(error);
     res
       .status(404)
       .json({ message: "Can not find trips!", error: err.message });
