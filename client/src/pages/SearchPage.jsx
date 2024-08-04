@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "../styles/List.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { setListings } from "../redux/state";
+import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setListings } from "../redux/state";
 import ListingCard from "../components/ListingCard";
 import Footer from "../components/Footer";
 
-const CategoryPage = () => {
-  const dispatch = useDispatch();
+const SearchPage = () => {
   const [loading, setLoading] = useState(true);
-  const { category } = useParams();
-
+  const { search } = useParams();
   const listings = useSelector((state) => state.listings);
 
-  const getFeedListings = async () => {
+  const dispatch = useDispatch();
+
+  const getSearchListings = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/properties?category=${category}`,
+        `http://localhost:3001/properties/search/${search}`,
         {
           method: "GET",
         }
@@ -27,40 +27,36 @@ const CategoryPage = () => {
       const data = await response.json();
       dispatch(setListings({ listings: data }));
       setLoading(false);
-    } catch (error) {
-      console.log("Fetch listing failed", error.message);
+    } catch (err) {
+      console.log("Fetch Search List failed!", err.message);
     }
   };
 
   useEffect(() => {
-    getFeedListings();
-  }, [category]);
+    getSearchListings();
+  }, [search]);
 
   return loading ? (
     <Loader />
   ) : (
     <>
       <Navbar />
-      <h1 className="title-list">{category} Listings</h1>
+      <h1 className="title-list">{search}</h1>
       <div className="list">
         {listings?.map(
-          (
-            {
-              _id,
-              creator,
-              listingPhotoPaths,
-              city,
-              province,
-              country,
-              category,
-              type,
-              price,
-              booking = false,
-            },
-            idx
-          ) => (
+          ({
+            _id,
+            creator,
+            listingPhotoPaths,
+            city,
+            province,
+            country,
+            category,
+            type,
+            price,
+            booking = false,
+          }) => (
             <ListingCard
-              key={idx}
               listingId={_id}
               creator={creator}
               listingPhotoPaths={listingPhotoPaths}
@@ -80,4 +76,4 @@ const CategoryPage = () => {
   );
 };
 
-export default CategoryPage;
+export default SearchPage;

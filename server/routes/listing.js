@@ -5,6 +5,7 @@ const {
   handleCreateListing,
   handleGetListings,
   handleGetListingDetails,
+  handleGetListingsBySearch,
 } = require("../controllers/listing");
 
 // multer configuration
@@ -20,9 +21,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post("/create", upload.array("listingPhotos"), handleCreateListing);
+
+// by category
 router.get("/", handleGetListings);
 
-router.get("/:listingId", handleGetListingDetails)
+// by search
+router.get("/search/:search", handleGetListingsBySearch);
 
+router.get("/:listingId", handleGetListingDetails);
 
 module.exports = router;
