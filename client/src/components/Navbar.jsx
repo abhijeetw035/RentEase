@@ -56,7 +56,7 @@ const Navbar = () => {
             <Person sx={{ color: "#969393" }} />
           ) : (
             <img
-              src={`http://localhost:3001/${user.profileImagePath.replace(
+              src={`https://rentease-kel4.onrender.com/${user.profileImagePath.replace(
                 "public",
                 ""
               )}`}

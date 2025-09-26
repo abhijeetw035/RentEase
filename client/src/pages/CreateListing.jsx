@@ -118,7 +118,7 @@ const CreateListing = () => {
       });
 
       // send a post req
-      const response = await fetch("http://localhost:3001/properties/create", {
+      const response = await fetch("https://rentease-kel4.onrender.com/properties/create", {
         method: "POST",
         body: listingForm,
       });

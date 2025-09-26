@@ -49,7 +49,7 @@ const ListingCard = ({
 const patchWishList = async () => {
   if (user?._id !== creator?._id) {
     const response = await fetch(
-      `http://localhost:3001/users/${user?._id}/${listingId}`,
+      `https://rentease-kel4.onrender.com/users/${user?._id}/${listingId}`,
       {
         method: "PATCH",
         header: {
@@ -74,7 +74,7 @@ const patchWishList = async () => {
           {listingPhotoPaths.map((photo, index) => (
             <div key={index} className="slide">
               <img
-                src={`http://localhost:3001/${photo?.replace("public", "")}`}
+                src={`https://rentease-kel4.onrender.com/${photo?.replace("public", "")}`}
                 alt={`photo ${index + 1}`}
                 onClick={() => {
                   navigate(`/properties/${listingId}`);

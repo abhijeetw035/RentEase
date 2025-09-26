@@ -20,7 +20,7 @@ const ListingDetails = () => {
   const getListingDetails = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/properties/${listingId}`,
+        `https://rentease-kel4.onrender.com/properties/${listingId}`,
         {
           method: "GET",
         }
@@ -70,7 +70,7 @@ const ListingDetails = () => {
         totalPrice: listing.price * dayCount,
       };
 
-      const response = await fetch("http://localhost:3001/bookings/create", {
+      const response = await fetch("https://rentease-kel4.onrender.com/bookings/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +103,7 @@ const ListingDetails = () => {
             item ? (
               <img
                 key={index}
-                src={`http://localhost:3001/${item.replace("public", "")}`}
+                src={`https://rentease-kel4.onrender.com/${item.replace("public", "")}`}
                 alt="listing photo"
               />
             ) : null
@@ -124,7 +124,7 @@ const ListingDetails = () => {
           {listing.creator?.profileImagePath ? (
             <>
               <img
-                src={`http://localhost:3001/${listing.creator.profileImagePath.replace(
+                src={`https://rentease-kel4.onrender.com/${listing.creator.profileImagePath.replace(
                   "public",
                   ""
                 )}`}
